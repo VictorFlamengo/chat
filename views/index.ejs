@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Chat aovivo</h1><br>
+    <div id="chat">
+
+    </div><br>
+    <input type="text" id="msg" placeholder="Digite sua mensagem"><br>
+    <input type="text" id="user" placeholder="Digite seu nome"><br>
+    <button id="send" onclick="enviar()">Enviar</button>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
+<script>
+    var socket = io('http://localhost:3000');
+
+    socket.on('disconnect', () => {
+        console.log('Desconectado do servidor');
+    });
+
+    socket.on('showmsg', (data) =>{
+        console.log(data);
+        var chat = document.getElementById('chat');
+        var p = document.createElement('p');
+        p.innerHTML = `<strong>${data.user}</strong>: ${data.msg}`;
+        chat.appendChild(p);
+    })
+
+    function enviar(){
+
+        var mensagem = document.getElementById('msg');
+        var usuario = document.getElementById('user');
+    
+        var msg = mensagem.value;
+        var user = usuario.value;
+    
+        socket.emit('msg', {msg: msg, user: user});
+    }
+
+</script>
+</html>
