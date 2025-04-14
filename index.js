@@ -5,10 +5,10 @@ const io = require('socket.io')(http);
 
 io.on('connection', (socket) => {
     
-    console.log('user connected');
+    console.log('Usuário conectado');
     
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+        console.log('Usuário desconectado');
     })
 
     socket.on('msg', (data) => {
