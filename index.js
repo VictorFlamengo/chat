@@ -6,6 +6,10 @@ const io = require('socket.io')(http);
 io.on('connection', (socket) => {
     
     console.log('Usuário conectado');
+
+    socket.on('nova-mensagem', (dados) => {
+      io.emit('mensagem-recebida', dados);
+  });
     
     socket.on('disconnect', () => {
         console.log('Usuário desconectado');
@@ -20,6 +24,7 @@ io.on('connection', (socket) => {
 })
 
 app.set('view engine', 'ejs');
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
   res.render('index');

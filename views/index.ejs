@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/notificacao.js"></script>
 </head>
 <body>
-    <h1>Chat aovivo</h1><br>
-    <div id="chat">
+    <div class="chat-container">
+        <h1>Chat ao vivo</h1><br>
+        <div id="chat"></div><br>
+        <input type="text" id="msg" placeholder="Digite sua mensagem"><br>
+        <input type="text" id="user" placeholder="Digite seu nome"><br>
+        <button id="send" onclick="enviar()">Enviar</button>
+    </div>
 
-    </div><br>
-    <input type="text" id="msg" placeholder="Digite sua mensagem"><br>
-    <input type="text" id="user" placeholder="Digite seu nome"><br>
-    <button id="send" onclick="enviar()">Enviar</button>
-
+    <div id="notificacao" class="notificacao" style="display: none;"></div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
 <script>
@@ -24,7 +27,7 @@
     });
 
     socket.on('showmsg', (data) =>{
-        console.log(data);
+        console.log(`Nova mensagem de ${data.user}: ${data.msg}`);
         var chat = document.getElementById('chat');
         var p = document.createElement('p');
         p.innerHTML = `<strong>${data.user}</strong>: ${data.msg}`;
